@@ -8,7 +8,8 @@ const { Monefy } = require('./monefy');
 
 let datas;
 const folder = './details/';
-const fileName = 'mtbank_2022_statement (1)';
+// const fileName = 'mtbank_2022_statement (1)';
+const fileName = 'bgpb_2022_report2';
 let bankName = '';
 
 try {

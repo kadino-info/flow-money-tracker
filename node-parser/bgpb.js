@@ -1,41 +1,38 @@
+const { getKeys } = require('./utils/getKeys');
+
   function BGPBank(root) {
+    const info = root.querySelector('.section_1')
+    const summary = root.querySelector('.section_2')
+    const detail = root.querySelector('.section_3')
+    let rows = detail.querySelectorAll('tr');
+    let headers = detail.querySelectorAll('th');
+    headers = headers.map((el) => getKeys(el.innerText.trim()));
+    let account = '';
 
-    // const formTbl = root.querySelector('.FormTBL');
-    // const tables = formTbl.querySelectorAll('table');
-    // let infos = [];
-    // const info = tables[0]
-    // const detail = tables[1];
-    // let headers = detail.querySelectorAll('th');
-    // let rows = detail.querySelectorAll('tr');
-    // headers = headers.map((el) => {
-    //   let result = el.innerText;
-    //   result = result.replace(',&nbsp;', ', ')
-    //   result = result.replace('кк', 'к к')
-    //   result = result.replace('валютекарт', 'валюте карт')
-    //   return result.trim();
-    // })
-    // let account = '';
-    // let infoRows = info.querySelectorAll('tr');
-    // infoRows.map((row) => {
-    //   const cells = row.querySelectorAll('td');
-    //   infos.push(cells.map((cell) => {
-    //     const text = cell.innerText.trim();
-    //     if (text.match(/ВЫПИСКА ПО СЧЕТУ КЛИЕНТА/)) account = text.replace('ВЫПИСКА ПО СЧЕТУ КЛИЕНТА ', '')
-    //     return text;
-    //   }));
-    // });
+    let infoRows = info.querySelectorAll('tr');
+    infoRows.map((row) => {
+      const cells = row.querySelectorAll('td');
+      cells.map((el, i) => {
+        if (el.innerText.match(/Номер карточного счета:/)) account = cells[i + 1].innerText;
+      })
+    });
 
-    // rows = rows.map((row) => {
-    //   const result = {};
-    //   const cells = row.querySelectorAll('td');
-    //   cells.map((cell, i) => {
-    //     result[headers[i]] = cell.innerText.trim();
-    //   })
-    //   result['Счёт'] = account;
-    //   return result;
-    // })
-    // return rows;
+    const newRows = [];
+    rows.map((row) => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length === 12) {
+        const result = {};
+        cells.map((cell, i) => {
+          if (i === 4 || i === 6) {
+            const num = parseFloat(cell.innerText.trim(), 10);
+            result[headers[i]] = cells[3].innerText === 'СПИСАНИЕ' ? -num : num;
+          } else result[headers[i]] = cell.innerText.trim();
+        })
+        result['account'] = account;
+        newRows.push(result);
+      }
+    })
+    return newRows;
   }
 
 module.exports = { BGPBank }
-
