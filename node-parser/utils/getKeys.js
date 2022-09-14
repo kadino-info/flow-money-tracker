@@ -1,3 +1,4 @@
+  // date;account;category;amount;currency;converted amount;currency;description
 const keys = {
   'Дата операции': 'date',
   'Дата отражения': 'showDate',

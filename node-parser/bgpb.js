@@ -1,6 +1,8 @@
 const { getKeys } = require('./utils/getKeys');
+const { create, listAll } = require('./storages/mongo');
 
-  function BGPBank(root) {
+
+function BGPBank(root) {
     const info = root.querySelector('.section_1')
     const summary = root.querySelector('.section_2')
     const detail = root.querySelector('.section_3')
@@ -30,6 +32,7 @@ const { getKeys } = require('./utils/getKeys');
         })
         result['account'] = account;
         newRows.push(result);
+
       }
     })
     return newRows;

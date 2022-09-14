@@ -6,7 +6,7 @@ const { BGPBank } = require('./bgpb');
 const { PriorBank } = require('./prior');
 const { Monefy } = require('./monefy');
 
-let datas;
+let result;
 const folder = './details/';
 // const fileName = 'mtbank_2022_statement (1)';
 const fileName = 'bgpb_2022_report2';
@@ -19,19 +19,19 @@ try {
 
     switch (bankName) {
       case 'mtbank':
-        datas = MtBank(root);
+        result = MtBank(root);
         break;
       case 'bgpb':
-        datas = BGPBank(root);
+        result = BGPBank(root);
         break;
       case 'prior':
-        datas = PriorBank(root);
+        result = PriorBank(root);
       case 'monefy':
-        datas = Monefy(root);
+        result = Monefy(root);
         break;
       default:
         break;
     }
   } catch (err) { console.error(err); }
 
-console.log(datas);
+console.log(result)
